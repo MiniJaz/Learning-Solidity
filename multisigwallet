@@ -44,7 +44,7 @@ contract multiSig is msownable{
     function createTransfer(uint _amount,address payable _recipient) public onlyOwners{
         require(address(this)!= _recipient, "Cannot send to yourself");
 
-        uint TxID = transfers.length; //set transactionID to start at 0 (transfers.length will be one more than the current number of txs)
+        uint TxID = transfers.length; //set transactionID to start at 0
 
         transfers.push(
             Transfer(TxID,_recipient,_amount,0,false) // add transfer to the array, set signatures to 0, set sent status to false
@@ -62,9 +62,6 @@ contract multiSig is msownable{
         transfers[_TransferID].signatures += 1; //update transfer to update the number of signatures
         emit signed(_TransferID,msg.sender);
 
-        //if signatures >= limit, send the transfer
-        //}
-        //}
         return transfers[_TransferID].signatures; //return number of signatures
     }
 
@@ -75,7 +72,7 @@ contract multiSig is msownable{
         require(transfers[_TransferID].sent == false, "This transaction has already been sent");
 
         transfers[_TransferID].sent = true; //set status as sent
-        transfers[_TransferID].recipient.transfer(transfers[_TransferID].amount); //transfer function - send funds
+        transfers[_TransferID].recipient.transfer(transfers[_TransferID].amount); // send funds
 
         emit transferred(_TransferID,transfers[_TransferID].recipient,transfers[_TransferID].amount);
 
