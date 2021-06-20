@@ -2,7 +2,7 @@
 pragma solidity 0.7.5;
 pragma abicoder v2;
 
-contract MSOwnable{
+contract msownable{
     
     address[] internal owners; //array of owners addresses
     uint internal requiredSigs; //number of signatures required
